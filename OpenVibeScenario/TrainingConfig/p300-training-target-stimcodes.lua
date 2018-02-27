@@ -18,7 +18,11 @@ end
 -- this function is called once by the box
 function process(box)
 
-	box:send_stimulation(1, stim0, launchTime, 0)
-	box:send_stimulation(1, stim1, launchTime, 0)
+	for i=1,10,1 do
+		box:send_stimulation(1, stim0, launchTime, 0)
+		box:send_stimulation(1, stim1, launchTime, 0)
+		launchTime = launchTime + 5
+	end
+--	box:send_stimulation(1, stim1, launchTime, 0)
 
 end

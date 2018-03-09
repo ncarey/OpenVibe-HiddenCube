@@ -47,11 +47,12 @@ function initialize(box)
 
 	dofile(box:get_config("${Path_Data}") .. "/plugins/stimulation/lua-stimulator-stim-codes.lua")
 
-	row_base = _G[box:get_setting(2)]
-	col_base = _G[box:get_setting(3)]
+	img_base = _G[box:get_setting(2)]
+	num_img = box:get_setting(3)
 	segment_start = _G[box:get_setting(4)]
 	segment_stop = _G[box:get_setting(5)]
-	
+	votes_filename = box:get_setting(6)	
+
 	-- 0 inactive, 1 segment started, 2 segment stopped (can vote)
 	segment_status = 0
 
@@ -60,8 +61,7 @@ function initialize(box)
 	
 	-- box:log("Info", string.format("pop %d %d", id[1], id[2]))
 					
-	row_votes = {}
-	col_votes = {}
+	img_votes = {}
 	
 	do_debug = false
 	
@@ -89,33 +89,22 @@ function process(box)
 					box:log("Info", string.format("Clear votes"))
 				end
 				-- zero the votes
-				col_votes = {}
-				row_votes = {}
+				img_votes = {}
 				target_fifo = List.new()
-				-- fixme fixed 20
-				for i = 0,20 do
-					col_votes[i] = 0
-					row_votes[i] = 0
+				
+				for i = 0,num_img do
+					img_votes[i] = 0
 				end
 				segment_status = 1
 			end
 
 			-- Does the identifier code a flash? if so, put into fifo
-			if segment_status == 1 and identifier >= row_base and identifier <= OVTK_StimulationId_LabelEnd then
+			if segment_status == 1 and identifier >= img_base and identifier <= OVTK_StimulationId_LabelEnd then
 			
-				-- assume rows before cols
-				if identifier < col_base then
-					local t = {"row", identifier - row_base}
-					List.pushright(target_fifo,t)
-					if do_debug then	
-						box:log("Info", string.format("Push row target %d", identifier - row_base ))		
-					end
-				else
-					local t = {"col", identifier - col_base}
-					List.pushright(target_fifo,t)	
-					if do_debug then	
-						box:log("Info", string.format("Push col target %d", identifier - col_base ))		
-					end
+				local t = {"img", identifier - img_base}
+				List.pushright(target_fifo,t)
+				if do_debug then	
+					box:log("Info", string.format("Push img target %d", identifier - img_base ))		
 				end
 				
 						
@@ -144,11 +133,7 @@ function process(box)
 				if do_debug then
 					box:log("Info", string.format("Pred fifo %s %d is target", t[1], t[2]))
 				end
-				if t[1]=="row" then
-					row_votes[t[2]] = row_votes[t[2]] + 1
-				else
-					col_votes[t[2]] = col_votes[t[2]] + 1				
-				end
+				img_votes[t[2]] = img_votes[t[2]] + 1
 			end
 			
 			if identifier == OVTK_StimulationId_NonTarget then
@@ -163,33 +148,36 @@ function process(box)
 		if segment_status == 2 and List.isempty(target_fifo) then
 			-- output the vote after the segment end when we've matched all predictions
 			
-			local maxRowIdx, maxRowValue = arrayMax(row_votes)
-			local maxColIdx, maxColValue = arrayMax(col_votes)
-
-			if maxRowValue == 0 and maxColValue == 0 then
+			local maxImgIdx, maxImgValue = arrayMax(img_votes)
+			
+			if maxImgValue == 0 then
 				box:log("Warning", string.format("Classifier predicted 'no p300' for all flashes of the trial"));
 			end
 			
 			if do_debug then
-				local rowVotes = 0
-				local colVotes = 0
-				for ir, val in pairs(row_votes) do
-					rowVotes = rowVotes + val
+				local imgVotes = 0
+				
+				for ir, val in pairs(img_votes) do
+					imgVotes = imgVotes + val
 				end
-				for ir, val in pairs(col_votes) do
-					colVotes = colVotes + val
-				end
-			
-				box:log("Info", string.format("Vote [%d %d] wt [%d,%d]", maxRowIdx+row_base, maxColIdx+col_base, maxRowValue, maxColValue))	
-				box:log("Info", string.format("  Total [%d %d]", rowVotes, colVotes))
+					
+				box:log("Info", string.format("Vote [%d %d]", maxImgIdx+img_base, maxImgValue))	
+				box:log("Info", string.format("  Total [%d]", imgVotes))
 			end
 			
 
-			
+			-- need to write votes to file			
+			votesfile = io.open(votes_filename, "w+")
+			for img_index = 0, num_img do
+				votesfile.writeline(string.format("[%d %d]", img_index, img_votes[img_index]))
+			end
+
+			votesfile:close()
+
 			local now = box:get_current_time()
 			
-			box:send_stimulation(1, maxRowIdx + row_base, now, 0)
-			box:send_stimulation(2, maxColIdx + col_base, now, 0)
+			box:send_stimulation(1, maxImgIdx + img_base, now, 0)
+			-- box:send_stimulation(2, maxColIdx + col_base, now, 0)
 					
 			segment_status = 0
 		end		

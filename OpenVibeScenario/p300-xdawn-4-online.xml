@@ -350,6 +350,13 @@
 					<Value>OVTK_StimulationId_TrialStop</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
+				<Setting>
+					<TypeIdentifier>(0x330306dd, 0x74a95f98)</TypeIdentifier>
+					<Name>Votes buffer file location</Name>
+					<DefaultValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/votes.txt</DefaultValue>
+					<Value>${Player_ScenarioDirectory}/../buffers/CurrentImages/votes.txt</Value>
+					<Modifiability>false</Modifiability>
+				</Setting>
 			</Settings>
 			<Attributes>
 				<Attribute>
@@ -767,11 +774,11 @@
 				</Attribute>
 				<Attribute>
 					<Identifier>(0x1fa7a38f, 0x54edbe0b)</Identifier>
-					<Value>576.000000</Value>
+					<Value>576</Value>
 				</Attribute>
 				<Attribute>
 					<Identifier>(0x207c9054, 0x3c841b63)</Identifier>
-					<Value>480.000000</Value>
+					<Value>480</Value>
 				</Attribute>
 				<Attribute>
 					<Identifier>(0x4e7b798a, 0x183beafb)</Identifier>

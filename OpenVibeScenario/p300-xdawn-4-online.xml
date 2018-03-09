@@ -21,7 +21,7 @@
 					<TypeIdentifier>(0xb0d0db45, 0x49cbc34a)</TypeIdentifier>
 					<Name>Lua Script</Name>
 					<DefaultValue></DefaultValue>
-					<Value>${Player_ScenarioDirectory}/p300-speller-launch.lua</Value>
+					<Value>${Player_ScenarioDirectory}/p300-HiddenCube-FileQue-launch.lua</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 				<Setting>
@@ -35,7 +35,14 @@
 					<TypeIdentifier>(0x512a166f, 0x5c3ef83f)</TypeIdentifier>
 					<Name>Time to send</Name>
 					<DefaultValue>20</DefaultValue>
-					<Value>20</Value>
+					<Value>5</Value>
+					<Modifiability>false</Modifiability>
+				</Setting>
+				<Setting>
+					<TypeIdentifier>(0x330306dd, 0x74a95f98)</TypeIdentifier>
+					<Name>Que File</Name>
+					<DefaultValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/isImageSetReady.txt</DefaultValue>
+					<Value>${Player_ScenarioDirectory}/../buffers/CurrentImages/isImageSetReady.txt</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 			</Settings>

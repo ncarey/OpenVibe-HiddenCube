@@ -59,26 +59,65 @@ if __name__=='__main__':
 
 
     file_names = listdir(curr_images_path)
-    if os.path.getsize(vote_path) == 0 and len(file_names) == 1:
+    decoder = {}    #Would it be prefereable to use a bufferfile?
+    if os.path.getsize(vote_path) == 0:
         print "here"
         #call HiddenCube and make some CurrentImages
-        os.system("python HiddenCubeDataset\scripts\test.py --name {0} --dimensions {1} --timing 1 --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5}".format(options.setname, options.dims, options.seed, options.N, options.para, options.rotations))
+        os.system("python HiddenCubeDataset\scripts\\test.py --name {0} --dimensions {1} --timing 1 --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5}".format(options.setname, options.dims, options.seed, options.N, options.para, options.rotations))
         file_names = listdir(data_images_path)
-        votes = open(join(curr_images_path, "decoder.txt"), "w")
+        mapfile = open(os.path.join(curr_images_path, "decode.txt"), 'w')
         for x in range(len(file_names)):
-            votes.write("{num:02d}.png {file}\n".format(num=(x+1), file=file_names[x]))
+            decoder["{num:02d}".format(num=(x+1))] = file_names[x]
+            print(decoder["{num:02d}".format(num=(x+1))])
             shutil.copy2(join(data_images_path, file_names[x]), join(curr_images_path, "{num:02d}.png".format(num=(x+1))))
-        votes.close()
+            mapfile.write("{num:02d} {0}\n".format(file_names[x], num=(x+1)))
+        mapfile.close()
+        ready = open(join(curr_images_path,"isImageSetReady.txt"), 'w')
+        ready.write("1\n")
+        ready.close();
+    #End of side case
 
 
+    #test to see if program can write similar images to
+    votes = open(vote_path, 'w')
+    votes.write("01 7")
+    votes.close()
 
-#    while True:
-#        if os.path.getsize(vote_path) == 0:
-#            sleep(5)
-#        else:
-#            votes = open(vote_path, 'r')
-#            for lines in votes:
-#                arr = lines.split() # Assuming the format is as such: "filename" "#votes"
-#                images[arr[0]] = int(arr[1])
-#
-#            open(vote_path, 'w').close() # to clear the files
+    looping = True
+    while looping:
+        if os.path.getsize(vote_path) == 0:
+            print "About to Stop"
+            time.sleep(5)
+            looping = False
+        else:
+            #in the case the program had to be killed
+            if len(decoder) == 0:
+                mapfile = open(join(curr_images_path, "decode.txt"), 'r')
+                for lines in mapfile:
+                    arr = lines.split()
+                    decoder[arr[0]] = arr[1]
+                mapfile.close()
+                mapfile = open(join(curr_images_path, "decode.txt"), 'w')
+                mapfile.close()
+
+            count = 1
+            threshold = 5 #some random number of votes
+            votes = open(vote_path, 'r')
+            mapfile = open(join(curr_images_path, "decode.txt"), 'a')
+            for lines in votes:
+                arr = lines.split()  # Assuming the format is as such: "filename" "#votes"
+                if int(arr[1]) > threshold: #creating new similar images if threshold is passed
+                    print(arr[0], arr[1])
+                    simi = decoder[arr[0]].replace(".png","")
+                    simi_path = join(middle, "HiddenCubeDataset", "datasets", options.setname, "{0}_similar_rotations".format(simi))
+                    os.system("python HiddenCubeDataset\scripts\\test.py --name {0} --dimensions {1} --timing 1 --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5} --similar {6}".format(options.setname, options.dims, options.seed, options.N, options.para, int(arr[1]), simi))
+                    new_files = listdir(simi_path)
+                    for x in range(len(new_files)):
+                        shutil.copy2( join(simi_path,"{0}.png".format(new_files[x])), join(curr_images_path, "{num:02d}.png".format(num=count)))
+                        mapfile.write("{num:02d} {file}".format(num=count, file=new_files[x]))
+                        count += 1
+                    print "Generated {0} similar rotations for {1}".format(int(arr[1]), arr[0])
+            votes.close()
+            votes = open(vote_path, 'w')
+            votes.close()
+            #open(vote_path, 'w').close() # to clear the files

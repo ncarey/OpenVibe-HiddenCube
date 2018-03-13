@@ -56,7 +56,7 @@ def generateCube(points, cube_noise_factor, cube_size, rand_int, unif, rand_matr
     elif rand_xyz == 2:
       z = unif(-1,1)
     else:
-      print("ERROR MR ERROR, this code should never be run!")
+      print "ERROR MR ERROR, this code should never be run!"
 
     x += rand_noise_x
     y += rand_noise_y
@@ -249,7 +249,7 @@ def similarRotationParallelWork(params):
     temp = os.path.join(data_dir_path, "images", "{0}".format(cur_principal_angle))
     #plot2DHist(rotation, data_dir_path + "/images/{0}".format(cur_principal_angle), 0, 1, fig)
     plot2DHist(rotation, temp, 0, 1, fig)
-    cmd = "copy {0} {1}".format(filename, sim_filename)
+    cmd = "cp {0} {1}".format(filename, sim_filename)
     subprocess.call(cmd, shell=True)
 
 
@@ -420,14 +420,14 @@ if __name__=='__main__':
     rand_int = numpy.random.randint
     norm_matrix = numpy.random.randn
 
-    if options.similar != -1.0:
+    if options.similar is not -1.0:
       #generate similar rotations mode
 
       #set up directory structure
       temp = os.path.join(data_dir_path, "{0}_similar_rotations".format(str(options.similar)))
       #similar_dir_path = data_dir_path + "/" + str(options.similar) + "_similar_rotations"
       similar_dir_path = temp
-      cmd = 'mkdir {0}'.format(similar_dir_path)
+      cmd = 'mkdir -p {0}/'.format(similar_dir_path)
       subprocess.call(cmd, shell=True, stdout=FNULL, stderr=FNULL)
 
       #read in simulated dataset
@@ -500,15 +500,15 @@ if __name__=='__main__':
       #plot2DHist(points, 'sim', 0, 1)
 
       #create dataset directory structure
-      cmd = 'rd /s /q {0}'.format(data_dir_path)
+      cmd = 'rm -rf {0}'.format(data_dir_path)
       subprocess.call(cmd, shell=True, stdout=FNULL, stderr=FNULL)
       temp = os.path.join(data_dir_path, "info")
       #cmd = 'mkdir -p {0}/info'.format(data_dir_path)
-      cmd = 'mkdir {0}'.format(temp)
+      cmd = 'mkdir -p {0}'.format(temp)
       subprocess.call(cmd, shell=True, stdout=FNULL, stderr=FNULL)
       temp = os.path.join(data_dir_path, "images")
       #cmd = 'mkdir -p {0}/images'.format(data_dir_path)
-      cmd = 'mkdir {0}'.format(temp)
+      cmd = 'mkdir -p {0}'.format(temp)
       subprocess.call(cmd, shell=True, stdout=FNULL, stderr=FNULL)
 
       #save simulated dataset to file
@@ -542,4 +542,4 @@ if __name__=='__main__':
         print (time.time() - start)
 
   except KeyError:
-    print("\t ERROR: You need to set the HIDDENCUBE_HOME environment variable to the path to the home directory of this project.  Execute a command similar to 'export HIDDENCUBE_HOME=/home/ncarey/gitrepos/HiddenCubeDataset'")
+    print "\t ERROR: You need to set the HIDDENCUBE_HOME environment variable to the path to the home directory of this project.  Execute a command similar to 'export HIDDENCUBE_HOME=/home/ncarey/gitrepos/HiddenCubeDataset'"

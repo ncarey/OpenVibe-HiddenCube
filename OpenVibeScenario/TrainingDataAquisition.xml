@@ -348,14 +348,14 @@
 					<TypeIdentifier>(0x512a166f, 0x5c3ef83f)</TypeIdentifier>
 					<Name>Percent of repetitions containing the target</Name>
 					<DefaultValue>100</DefaultValue>
-					<Value>50</Value>
+					<Value>80</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 				<Setting>
 					<TypeIdentifier>(0x007deef9, 0x2f3e95c6)</TypeIdentifier>
 					<Name>Number of repetitions</Name>
 					<DefaultValue>5</DefaultValue>
-					<Value>20</Value>
+					<Value>25</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 				<Setting>
@@ -369,7 +369,7 @@
 					<TypeIdentifier>(0x512a166f, 0x5c3ef83f)</TypeIdentifier>
 					<Name>Flash duration (in sec)</Name>
 					<DefaultValue>0.075</DefaultValue>
-					<Value>0.2</Value>
+					<Value>0.3</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 				<Setting>

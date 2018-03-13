@@ -80,7 +80,7 @@ if __name__=='__main__':
 
 	parser.add_option("-m", "--dimensionsize", type="int", dest="N", default=1500, help="Specify how many data points total per dimension", metavar="#N")
 
-	parser.add_option("-r", "--rotations", type="int", dest="rotations", default=100, help="Specify how many random rotations of the dataset to perform", metavar="#ROTS")
+	parser.add_option("-r", "--rotations", type="int", dest="rotations", default=400, help="Specify how many random rotations of the dataset to perform", metavar="#ROTS")
 
 	parser.add_option("-p", "--parallelization", type="int", dest="para", default=2, help="Specify how many parallel processes to use when generating random rotations", metavar="#PARA")
 
@@ -91,7 +91,7 @@ if __name__=='__main__':
 
 	
 	#temporary
-	num_cur_images = 10
+	num_cur_images = 20
 	project_dir = "D:\Workspace\PULSD\OpenVibe-HiddenCube"
 	#middle = os.environ["OPENVIBE_MIDDLE"] # or some other path variable
 	cur_images_dir = join(project_dir, "buffers", "CurrentImages");
@@ -152,7 +152,7 @@ if __name__=='__main__':
 		# clear votes.txt
 		# set isImageSetReady.txt to 1
 		else:
-                        print("reading votes and generating new image set")
+                        print("reading classifier votes and generating new image set for RSVP")
                         time.sleep(3)
                         votes = readVotes(vote_file_path)
                         clearCurrentImages(cur_images_dir)

@@ -22,4 +22,24 @@
 	<SettingValue>OVTK_StimulationId_Label_09</SettingValue>
 	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/10.png</SettingValue>
 	<SettingValue>OVTK_StimulationId_Label_0A</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/11.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_0B</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/12.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_0C</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/13.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_0D</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/14.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_0E</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/15.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_0F</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/16.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_10</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/17.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_11</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/18.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_12</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/19.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_13</SettingValue>
+	<SettingValue>${Player_ScenarioDirectory}/../buffers/CurrentImages/20.png</SettingValue>
+	<SettingValue>OVTK_StimulationId_Label_14</SettingValue>
 </OpenViBE-SettingsOverride>

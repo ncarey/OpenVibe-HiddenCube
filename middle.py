@@ -7,7 +7,7 @@ from os import listdir
 from os.path import isfile, join
 from math import *
 import multiprocessing
-import numpy
+import numpy as np
 import filecmp
 import shutil
 
@@ -36,24 +36,27 @@ if __name__=='__main__':
             default=1500, help="Specify how many data points total per dimension", metavar="#N")
 
     parser.add_option("-r", "--rotations", type="int", dest="rotations",
-             default=10, help="Specify how many random rotations of the dataset to perform", metavar="#ROTS")
+            default=10, help="Specify how many random rotations of the dataset to perform", metavar="#ROTS")
 
     parser.add_option("-p", "--parallelization", type="int", dest="para",
             default=2, help="Specify how many parallel processes to use when generating random rotations", metavar="#PARA")
 
     parser.add_option("-f", "--similar", type="float", dest="similar",
-                     default=-1.0, help="Specify principal angle of rotation to generate similar rotations", metavar="#SIMI")
+            default=-1.0, help="Specify principal angle of rotation to generate similar rotations", metavar="#SIMI")
 
     parser.add_option("-v", "--similarityfactor", type="float", dest="similarfac",
-                     default=0.1, help="Specify how similar the rotations should be (TODO: experiment with this)", metavar="#SIMI")
+            default=0.1, help="Specify how similar the rotations should be (TODO: experiment with this)", metavar="#SIMI")
     (options, args) = parser.parse_args()
 
+    parser.add_option("-sn", "--similaritytype", type="int", dest="sim_num", 
+            default="0", help="Picks the similarity function being used\n 0 -> normal\n 1 -> L2\n 2 -> clustering(?)")
 
 
 
 
     middle = os.environ["OPENVIBE_MIDDLE"] # or some other path variable
-    curr_images_path = join(middle, "buffers", "CurrentImages");
+    curr_images_path = join(middle, "buffers", "CurrentImages")
+    scripts_path = join(middle, "HiddenCubeDataset", "scripts") #need this shit
     data_images_path = join(middle, "HiddenCubeDataset", "datasets", options.setname, "images")
     vote_path = join(curr_images_path, "votes.txt")
 
@@ -74,7 +77,7 @@ if __name__=='__main__':
         mapfile.close()
         ready = open(join(curr_images_path,"isImageSetReady.txt"), 'w')
         ready.write("1\n")
-        ready.close();
+        ready.close()
     #End of side case
 
 
@@ -83,7 +86,7 @@ if __name__=='__main__':
     votes.write("01 7")
     votes.close()
 
-    looping = True
+    looping = False
     while looping:
         if os.path.getsize(vote_path) == 0:
             print "About to Stop"
@@ -110,14 +113,20 @@ if __name__=='__main__':
                     print(arr[0], arr[1])
                     simi = decoder[arr[0]].replace(".png","")
                     simi_path = join(middle, "HiddenCubeDataset", "datasets", options.setname, "{0}_similar_rotations".format(simi))
+                    new_files = []
                     os.system("python HiddenCubeDataset\scripts\\test.py --name {0} --dimensions {1} --timing 1 --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5} --similar {6}".format(options.setname, options.dims, options.seed, options.N, options.para, int(arr[1]), simi))
-                    new_files = listdir(simi_path)
+                    if options.sim_num == 0:
+                        new_files = listdir(simi_path)
+                    if options.sim_num == 1:
+                        os.system("python similar.pn --name {0} --image-to-compare {1}".format(options.setname, join(curr_images_path, arr[0])))
+                        new_files = np.load("images.sim")
+
+
                     for x in range(len(new_files)):
                         shutil.copy2( join(simi_path,"{0}.png".format(new_files[x])), join(curr_images_path, "{num:02d}.png".format(num=count)))
                         mapfile.write("{num:02d} {file}".format(num=count, file=new_files[x]))
                         count += 1
                     print "Generated {0} similar rotations for {1}".format(int(arr[1]), arr[0])
             votes.close()
-            votes = open(vote_path, 'w')
-            votes.close()
-            #open(vote_path, 'w').close() # to clear the files
+            #votes = open(vote_path, 'w')
+            #votes.close()

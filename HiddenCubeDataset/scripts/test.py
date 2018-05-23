@@ -205,7 +205,8 @@ def similarRotationParallelWork(params):
 
   for i in range(0, rotations):
 
-    diff_matrix = numpy.random.uniform(low=-1 * (similarity_factor), high=similarity_factor, size=(dims,dims))
+    #diff_matrix = numpy.random.uniform(low=-1 * (similarity_factor), high=similarity_factor, size=(dims,dims))
+    diff_matrix = numpy.random.normal(loc=0, scale=similarity_factor, size=(dims,dims))
     new_seed_matrix = seed_matrix + diff_matrix
 
     correct, rotation_matrix = similarRotationMatrix(dims, new_seed_matrix)
@@ -229,7 +230,7 @@ def similarRotationParallelWork(params):
         matrix_file.write(line + "\n")
 
 
-    temp = os.path.join(data_dir_path, "info", "{0}_rotation_matrix.txt")
+    temp = os.path.join(data_dir_path, "info", "{0}_rotation_matrix.txt".format(cur_principal_angle))
     #with open(data_dir_path + "/info/{0}_rotation_matrix.txt".format(cur_principal_angle), 'w') as matrix_file:
     with open(temp, "w") as matrix_file:
       for i in range(0, len(rotation_matrix)):

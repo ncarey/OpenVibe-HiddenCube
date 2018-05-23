@@ -104,7 +104,7 @@
 					<TypeIdentifier>(0x330306dd, 0x74a95f98)</TypeIdentifier>
 					<Name>Filename</Name>
 					<DefaultValue></DefaultValue>
-					<Value>${Player_ScenarioDirectory}/TrainingSignals/trainingAquisition.ov</Value>
+					<Value>${Player_ScenarioDirectory}/TrainingSignals/trainingAquisitionLong.ov</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 			</Settings>
@@ -252,7 +252,7 @@
 					<TypeIdentifier>(0x007deef9, 0x2f3e95c6)</TypeIdentifier>
 					<Name>Decimation factor</Name>
 					<DefaultValue>8</DefaultValue>
-					<Value>4</Value>
+					<Value>2</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 			</Settings>

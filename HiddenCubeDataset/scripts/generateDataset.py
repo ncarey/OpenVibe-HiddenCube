@@ -56,7 +56,7 @@ def generateCube(points, cube_noise_factor, cube_size, rand_int, unif, rand_matr
     elif rand_xyz == 2:
       z = unif(-1,1)
     else:
-      print "ERROR MR ERROR, this code should never be run!"
+      print("ERROR MR ERROR, this code should never be run!")
 
     x += rand_noise_x
     y += rand_noise_y

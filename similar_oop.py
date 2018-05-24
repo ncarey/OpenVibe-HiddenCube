@@ -24,8 +24,9 @@ def pca(cmp, image_names, PATH_im):
     X = np.ndarray((len(image_names)+1, 512, 512), 'int8')
     X[0] = cmp
     for i in range(1, len(image_names)):
-        X[i] = imageio.imread(join(PATH_im, image_names[x]))
-    X_proj = pca.fit_transform(X+cmp) # not really sure how to handle images, as they are 
+        X[i] = imageio.imread(join(PATH_im, image_names[i]))
+    X_proj = pca.fit_transform(X) # not really sure how to handle images, as they are 
+    print()
 
     # Now see which images are most similar to cmp using L2 norm (or any other norm)
     # how ???
@@ -40,7 +41,7 @@ def procrustes(cmp, image_names, PATH_im):
         try:
             _, _, diff = spatial.procrustes(temp, cmp)
         except:
-            print "caught"
+            print("caught")
         norms[x] = (image_names[x], diff)
         
     norms.sort(order='norm')
@@ -53,7 +54,7 @@ def L2(cmp, image_names, PATH_im):
         temp = imageio.imread(join(PATH_im, image_names[x]))
         temp = temp[:,:,0] 
         norms[x] = (image_names[x], linalg.norm(temp - cmp))
-        print norms[x]
+        print(norms[x])
     norms.sort(order='norm')
     #np.save("images.sim", norms[:15])
     return norms
@@ -101,9 +102,9 @@ def get_args():
 
     # checks
     if options.image == "dne" :
-        print "Please choose a real image"
+        print("Please choose a real image")
     if options.num < 1 :
-        print "Please choose a positive integer"
+        print("Please choose a positive integer")
     return parser.parse_args()
 
 

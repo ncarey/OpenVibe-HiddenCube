@@ -1,6 +1,9 @@
 HiddenCubeDataset
 =================
 
+THIS README IS OLD. CODE HAS BEEN REFACTORED
+
+
 Ubuntu Requirements:
 Python 2.7
 sudo apt-get install python-numpy

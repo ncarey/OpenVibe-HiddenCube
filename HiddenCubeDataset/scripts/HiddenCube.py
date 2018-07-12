@@ -398,7 +398,7 @@ class HiddenCube:
         if notebook_plot:
             pylab.show()
 
-        pylab.clf()
+        pylab.close()
     
     #class variables defined here are shared between all instances of the class
     

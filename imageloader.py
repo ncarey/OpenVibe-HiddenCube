@@ -11,6 +11,8 @@ import numpy
 import filecmp
 import shutil
 
+from HiddenCubeDataset.scripts.HiddenCube import HiddenCube
+
 def clearCurrentImages(image_dir):
 	images = listdir(image_dir)
 	images.remove('isImageSetReady.txt')
@@ -88,13 +90,12 @@ if __name__=='__main__':
 
 	(options, args) = parser.parse_args()
 
-
-	
+        	
 	#temporary
 	num_cur_images = 20
 	project_dir = "D:\Workspace\PULSD\OpenVibe-HiddenCube"
 	#middle = os.environ["OPENVIBE_MIDDLE"] # or some other path variable
-	cur_images_dir = join(project_dir, "buffers", "CurrentImages");
+	cur_images_dir = join(project_dir, "buffers", "CurrentImages")
 	data_images_dir = join(project_dir, "HiddenCubeDataset", "datasets", options.setname, "images")
 	vote_file_path = join(cur_images_dir, "votes.txt")
 	isImageSetReady_file_path = join(cur_images_dir, "isImageSetReady.txt")
@@ -103,6 +104,18 @@ if __name__=='__main__':
 	#these images are named 01.png 02.png ... NN.png, decoder tracks which images in the
 	#hiddenCube dataset these are
 	decoder = {}
+
+
+	#create HiddenCubeDataset object
+
+	cube = HiddenCube(project_directory = join(project_dir, "HiddenCubeDataset"),
+                          dataset_name = options.setname, n_dimensions = options.dims,
+                          dimension_size = options.N,
+                          randn_seed = options.seed,
+                          hypersphere_noise_multiplier = 4,
+                          parallelization = 2,
+                          notebook_plotting = False)
+
 	
 	looping = True
 	while looping:
@@ -127,7 +140,10 @@ if __name__=='__main__':
 		elif isVoteFileEmpty(vote_file_path): 
 
 			print("creating new HiddenCubeSet")
-			os.system("python HiddenCubeDataset\scripts\\test.py --name {0} --dimensions {1} --timing 1 --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5}".format(options.setname, options.dims, options.seed, options.N, options.para, options.rotations))
+			#os.system("python HiddenCubeDataset\scripts\\test.py --name {0} --dimensions {1} --timing 1 --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5}".format(options.setname, options.dims, options.seed, options.N, options.para, options.rotations))
+			#should we be generating 400 rotations off the bat?
+			cube.generateRandomRotations(options.rotations)
+                        
 			random_rotation_files = listdir(data_images_dir)
 			#randomly select num_cur_images of those to use in RSVP
 			sampled_indexes = random.sample(range(1, len(random_rotation_files)), num_cur_images)
@@ -165,7 +181,10 @@ if __name__=='__main__':
                                         #shall we use number of votes to influence num sim rots?	
                                         dataset_image_ID = decoder["{num:02d}".format(num=int(cur_target_name))].replace(".png","")
                                         dataset_image_path = join(project_dir, "HiddenCubeDataset", "datasets", options.setname, "{0}_similar_rotations".format(dataset_image_ID))
-                                        os.system("python HiddenCubeDataset\scripts\\test.py --name {0} --dimensions {1} --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5} --similar {6}".format(options.setname, options.dims, options.seed, options.N, options.para, int(votes[cur_target_name]) * 2, dataset_image_ID))
+                                        #os.system("python HiddenCubeDataset\scripts\\test.py --name {0} --dimensions {1} --seed {2} --dimensionsize {3} --parallelization {4} --rotations {5} --similar {6}".format(options.setname, options.dims, options.seed, options.N, options.para, int(votes[cur_target_name]) * 2, dataset_image_ID))
+                                        #similar rotations...need to fix some magic numbers here
+                                        cube.generateSimilarRotations(principal_angle_ID = dataset_image_ID, rotations = int(votes[cur_target_name]) * 2, similarity_factor = options.similarfac)
+
                                         new_images = listdir(dataset_image_path)
                                         for new_image in new_images:
                                                 shutil.copy2(join(dataset_image_path, new_image), join(cur_images_dir, "{num:02d}.png".format(num=cur_image_count)))

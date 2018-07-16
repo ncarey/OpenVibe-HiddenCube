@@ -346,6 +346,10 @@ class HiddenCube:
         pool.close() #POOL'S CLOSED!
 
         pool.join()
+
+    def getDatasetName()
+        return self.dataset_name
+
     
     @staticmethod
     def plot2DHist(points_arr, name_path, x_dimension, y_dimension, notebook_plot):

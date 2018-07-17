@@ -1,6 +1,10 @@
 from HiddenCubeDataset.scripts.HiddenCube import HiddenCube
-import ImageLoader
+from imageloader import ImageLoader
 import os
+from os.path import join
+import sys
+import time
+from optparse import OptionParser
 
 
 if __name__=='__main__':
@@ -23,7 +27,7 @@ if __name__=='__main__':
 
     parser.add_option("-v", "--similarityfactor", type="float", dest="similarfac", default=0.1, help="Specify how similar the rotations should be (TODO: experiment with this)", metavar="#SIMI")
 
-    parser.add_option("-h", "--hypersphereNoiseMultiplier", type="float", dest="hsphere", default=4.0, help="Specify the hypersphere noise multiplier (TODO: experiment with this)", metavar="#HNOI")
+    parser.add_option("-x", "--hypersphereNoiseMultiplier", type="float", dest="hsphere", default=4.0, help="Specify the hypersphere noise multiplier (TODO: experiment with this)", metavar="#HNOI")
 
     parser.add_option("-i", "--imagecount", type="int", dest="imagecount", default=20, help="Specify the amount of images per iteration of RSVP", metavar="#IMAGEC")
     (options, args) = parser.parse_args()
@@ -46,4 +50,9 @@ if __name__=='__main__':
 
     image_count = options.imagecount
 
-    imageloader = ImageLoader(project_dir, cube, image_count, debug = 1)
+    imageloader = ImageLoader(cube, project_dir, image_count, similarity_factor = .1, debug = 1)
+
+    looping = True
+    while looping:
+        imageloader.process()
+        time.sleep(5)

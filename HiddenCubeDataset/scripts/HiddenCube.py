@@ -347,7 +347,7 @@ class HiddenCube:
 
         pool.join()
 
-    def getDatasetName()
+    def getDatasetName(self):
         return self.dataset_name
 
     

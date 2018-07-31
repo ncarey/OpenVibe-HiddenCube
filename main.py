@@ -1,5 +1,5 @@
 from HiddenCubeDataset.scripts.HiddenCube import HiddenCube
-from imageloader import ImageLoader
+from ImageLoader import ImageLoader
 import os
 from os.path import join
 import sys

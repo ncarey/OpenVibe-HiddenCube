@@ -49,7 +49,7 @@ if __name__=='__main__':
 
     cube.generateRandomRotations(options.rotations)
 
-    logpath = join(project_dir, "ExperimentLogs")
+    logpath = join(join(project_dir, "ExperimentLogs"), options.setname + ".txt")
     log = ExperimentLog(logpath, options.setname, options.seed, options.similarfac, options.imagecount)
 
     imageloader = ImageLoader(cube, log, project_dir, options.imagecount, similarity_factor = options.similarfac, debug = 1)

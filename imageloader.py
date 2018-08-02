@@ -112,6 +112,7 @@ class ImageLoader:
             print("reading classifier votes and generating new image set for RSVP")
             time.sleep(3)
             votes = self.readVotes()
+            self.log.recordImageVotes(votes, self.decoder)
             self.clearImageBufferDir()
             cur_image_count = 1
             while cur_image_count <= self.image_count:
@@ -130,7 +131,7 @@ class ImageLoader:
                         shutil.copy2(join(dataset_image_path, new_image), join(self.cur_images_dir, "{num:02d}.png".format(num=cur_image_count)))
                         self.decoder["{num:02d}".format(num=cur_image_count)] = new_image
                         cur_image_count += 1;
-                        if cur_image_count > image_count:
+                        if cur_image_count > self.image_count:
                             break;
                     votes[cur_target_name] = 0 # so we dont double select
 

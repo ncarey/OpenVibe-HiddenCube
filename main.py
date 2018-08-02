@@ -1,5 +1,6 @@
 from HiddenCubeDataset.scripts.HiddenCube import HiddenCube
 from ImageLoader import ImageLoader
+from ExperimentLog import ExperimentLog
 import os
 from os.path import join
 import sys
@@ -21,7 +22,7 @@ if __name__=='__main__':
 
     parser.add_option("-m", "--dimensionsize", type="int", dest="N", default=1500, help="Specify how many data points total per dimension", metavar="#N")
 
-    parser.add_option("-r", "--rotations", type="int", dest="rotations", default=400, help="Specify how many random rotations of the dataset to perform to start out with", metavar="#ROTS")
+    parser.add_option("-r", "--rotations", type="int", dest="rotations", default=40, help="Specify how many random rotations of the dataset to perform to start out with", metavar="#ROTS")
 
     parser.add_option("-p", "--parallelization", type="int", dest="para", default=2, help="Specify how many parallel processes to use when generating random rotations", metavar="#PARA")
 
@@ -48,9 +49,10 @@ if __name__=='__main__':
 
     cube.generateRandomRotations(options.rotations)
 
-    image_count = options.imagecount
+    logpath = join(project_dir, "ExperimentLogs")
+    log = ExperimentLog(logpath, options.setname, options.seed, options.similarfac, options.imagecount)
 
-    imageloader = ImageLoader(cube, project_dir, image_count, similarity_factor = .1, debug = 1)
+    imageloader = ImageLoader(cube, log, project_dir, options.imagecount, similarity_factor = options.similarfac, debug = 1)
 
     looping = True
     while looping:

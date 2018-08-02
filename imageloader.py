@@ -145,6 +145,7 @@ class ImageLoader:
 
     def __init__(self,
                  dataset,
+                 log,
                  project_dir = "D:\Workspace\PULSD\OpenVibe-HiddenCube",
                  image_count = 20,
                  seed = -1,
@@ -154,6 +155,8 @@ class ImageLoader:
         self.debug = debug
         
         self.dataset = dataset
+        self.log = log
+        
         self.image_count = image_count
         self.similarity_factor = similarity_factor
         

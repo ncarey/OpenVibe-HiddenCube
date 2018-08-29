@@ -32,7 +32,7 @@ class ExperimentLog:
             log_file.write("\t{0}, {1}\n".format(dataset_image_ID, vote_count))
 
         log_file.close()
-        self.iteration++
+        self.iteration = self.iteration + 1
 
     def __init__(self, logpath, experiment_name, seed, similarity_factor, imagecount):
         self.logpath = logpath

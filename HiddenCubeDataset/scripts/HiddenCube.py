@@ -293,7 +293,7 @@ class HiddenCube:
 
         #set up directory structure
         similar_dir_path = os.path.join(self.data_dir_path, "{0}_similar_rotations".format(str(principal_angle_ID)))
-        os.makedirs(similar_dir_path)
+        os.makedirs(similar_dir_path, exist_ok=True)
         
         #read in seed_matrix
         seed_matrix_path = os.path.join(self.data_dir_path, "info", "{0}_seed_matrix.txt".format(str(principal_angle_ID)))
@@ -467,6 +467,6 @@ class HiddenCube:
             print("Dataset directory did not already exist, nothing to remove")
             
         #create dataset directories
-        os.makedirs(self.info_dir_path) #contains metadata about images
-        os.makedirs(self.images_dir_path) #contains random rotation images
+        os.makedirs(self.info_dir_path, exist_ok=True) #contains metadata about images
+        os.makedirs(self.images_dir_path, exist_ok=True) #contains random rotation images
         

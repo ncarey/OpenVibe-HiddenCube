@@ -168,7 +168,7 @@ function process(box)
 
 			-- need to write votes to file			
 			local votesfile = assert(io.open(votes_filename, "w+"))
-			for img_index = 0, num_img do
+			for img_index = 1, num_img do
 				votesfile:write(string.format("%d %d\n", img_index, img_votes[img_index]))
 			end
 

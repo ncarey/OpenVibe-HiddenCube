@@ -754,7 +754,7 @@
 					<TypeIdentifier>(0xb0d0db45, 0x49cbc34a)</TypeIdentifier>
 					<Name>Lua Script</Name>
 					<DefaultValue></DefaultValue>
-					<Value>${Player_ScenarioDirectory}/OnlineConfig/p300-HiddenCube-accumulator.lua</Value>
+					<Value>D:/Workspace/PULSD/OpenVibe-HiddenCube/OpenVibeScenario/OnlineConfig/p300-HiddenCube-accumulator.lua</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 				<Setting>
@@ -1138,11 +1138,11 @@
 			<Attributes>
 				<Attribute>
 					<Identifier>(0x1fa7a38f, 0x54edbe0b)</Identifier>
-					<Value>144.000000</Value>
+					<Value>144</Value>
 				</Attribute>
 				<Attribute>
 					<Identifier>(0x207c9054, 0x3c841b63)</Identifier>
-					<Value>816.000000</Value>
+					<Value>816</Value>
 				</Attribute>
 				<Attribute>
 					<Identifier>(0x4e7b798a, 0x183beafb)</Identifier>

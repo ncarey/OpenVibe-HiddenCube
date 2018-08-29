@@ -104,7 +104,7 @@
 					<TypeIdentifier>(0x330306dd, 0x74a95f98)</TypeIdentifier>
 					<Name>Filename</Name>
 					<DefaultValue></DefaultValue>
-					<Value>${Player_ScenarioDirectory}/TrainingSignals/trainingAquisitionLong.ov</Value>
+					<Value>D:/Workspace/PULSD/OpenVibe-HiddenCube/OpenVibeScenario/TrainingSignals/trainingAquisitionLong.ov</Value>
 					<Modifiability>false</Modifiability>
 				</Setting>
 			</Settings>

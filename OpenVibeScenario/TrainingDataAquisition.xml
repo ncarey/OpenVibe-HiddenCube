@@ -160,11 +160,11 @@
 			<Attributes>
 				<Attribute>
 					<Identifier>(0x1fa7a38f, 0x54edbe0b)</Identifier>
-					<Value>400</Value>
+					<Value>416</Value>
 				</Attribute>
 				<Attribute>
 					<Identifier>(0x207c9054, 0x3c841b63)</Identifier>
-					<Value>512</Value>
+					<Value>1008</Value>
 				</Attribute>
 				<Attribute>
 					<Identifier>(0x4e7b798a, 0x183beafb)</Identifier>
